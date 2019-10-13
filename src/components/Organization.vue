@@ -1,6 +1,7 @@
 <template>
   <div>
     <Vue2OrgTree
+      class="tree"
       :data="datasource"
       :renderContent="renderContent"
       :props="props"
@@ -22,7 +23,7 @@ export default {
         expand: "expand",
         children: "children"
       },
-      labelWidth: 180
+      labelWidth: 260
     };
   },
   props: {
@@ -34,8 +35,15 @@ export default {
       return f(Card, { props: { worker } });
     },
     clickNode(e, data) {
-      console.log("data");
+      console.log("e", e, "data", data);
     }
   }
 };
 </script>
+
+<style scoped>
+.tree {
+  transform: scale(0.3);
+  border: 3px dotted black;
+}
+</style>

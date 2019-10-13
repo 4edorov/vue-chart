@@ -33,8 +33,8 @@ export default {
 
 <style scoped>
 .card {
-  height: 150px;
-  width: 170px;
+  height: 200px;
+  width: 250px;
   background-color: bisque;
   border: 1px solid black;
   border-radius: 5px;
@@ -44,11 +44,11 @@ export default {
   padding: 5px;
 }
 .avatar {
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 60px;
+  max-height: 60px;
   border-radius: 50%;
 }
 .title {
-  font-size: 9px;
+  font-size: 22px;
 }
 </style>
