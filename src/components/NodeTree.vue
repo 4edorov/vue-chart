@@ -20,7 +20,7 @@ export default {
   props: {
     tree: Object
   }
-}
+};
 </script>
 
 <style scoped>

@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       initStuff: null,
-      treeStuff: null,
+      treeStuff: null
     };
   },
   created() {
@@ -32,16 +32,17 @@ export default {
 
       const tree = this.initStuff.reduce((acc, item) => {
         const current = stuffIds[item.id];
-        if(!current.chiefId) {
+        if (!current.chiefId) {
           acc.push(current);
         } else {
-          stuffIds[item.chiefId].children || (stuffIds[item.chiefId].children = [])
+          stuffIds[item.chiefId].children ||
+            (stuffIds[item.chiefId].children = []);
           stuffIds[item.chiefId].children.push(current);
         }
         return acc;
       }, [])[0];
       this.treeStuff = tree;
-      console.log('tree data', JSON.stringify(tree, null, " "));
+      console.log("tree data", JSON.stringify(tree, null, " "));
       return tree;
     },
 
@@ -62,7 +63,7 @@ export default {
         })
         .flat();
       this.initStuff = stuff;
-      console.log('initial data', JSON.stringify(stuff, null, ' '))
+      console.log("initial data", JSON.stringify(stuff, null, " "));
       return stuff;
     },
 

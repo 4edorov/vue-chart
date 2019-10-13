@@ -14,7 +14,7 @@ export default {
     worker: Object,
     name: String,
     image_url: String,
-    position: String,
+    position: String
   },
   methods: {
     isShowValue(key) {
