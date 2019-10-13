@@ -1,52 +1,48 @@
 <template>
   <div>
-    <div v-for="(row, index) in processedStuff" :key="index" class="main">
-      <div v-for="worker in row" :key="worker.id" class="row">
-        <Card :worker="worker" />
-      </div>
-    </div>
+    <organization :datasource="treeStuff" />
   </div>
 </template>
 
 <script>
-import Card from "./Card";
+import Organization from "./Organization";
 import faker from "faker";
 
 export default {
   name: "MainChart",
   components: {
-    Card
+    Organization
   },
   data() {
     return {
       initStuff: null,
-      processedStuff: null,
+      treeStuff: null,
     };
   },
   created() {
     this.generateStuff();
-    this.processStuff();
+    this.generateTreeStuff();
   },
   methods: {
-    processStuff() {
-      const stuff = [ ...this.initStuff ];
-      const addedChiefIds = [];
-      const result = [];
-      stuff.map((item, index) => {
-        const { chiefId } = item;
-        const addedChiefIdIndex = addedChiefIds.indexOf(chiefId);
-        if (addedChiefIdIndex === -1) {
-          const idsLength = addedChiefIds.length;
-          addedChiefIds[idsLength] = chiefId;
-          result[idsLength] = [];
-          result[idsLength].push(item);
+    generateTreeStuff() {
+      const stuffIds = this.initStuff.reduce((acc, item) => {
+        acc[item.id] = { ...item };
+        return acc;
+      }, {});
+
+      const tree = this.initStuff.reduce((acc, item) => {
+        const current = stuffIds[item.id];
+        if(!current.chiefId) {
+          acc.push(current);
         } else {
-          result[addedChiefIdIndex].push(item);
+          stuffIds[item.chiefId].children || (stuffIds[item.chiefId].children = [])
+          stuffIds[item.chiefId].children.push(current);
         }
-      })
-      this.processedStuff = result;
-      console.log('processed stuff', result);
-      return result;
+        return acc;
+      }, [])[0];
+      this.treeStuff = tree;
+      console.log('tree data', JSON.stringify(tree, null, " "));
+      return tree;
     },
 
     generateStuff() {
@@ -57,7 +53,7 @@ export default {
           return tier.ids.map(id => {
             return {
               id: id,
-              imageUrl: faker.image.avatar(),
+              image_url: faker.image.avatar(),
               name: faker.name.findName(),
               position: faker.name.jobTitle(),
               chiefId: tier.chiefId
@@ -66,7 +62,7 @@ export default {
         })
         .flat();
       this.initStuff = stuff;
-      console.log('stuff', stuff)
+      console.log('initial data', JSON.stringify(stuff, null, ' '))
       return stuff;
     },
 

@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div v-for="(value, key) in worker" :key="key">
-      <img v-if="key === 'imageUrl'" :src="value" class="avatar" />
+      <img v-if="key === 'image_url'" :src="value" class="avatar" />
       <div v-else-if="isShowValue(key)" class="title">{{ value }}</div>
     </div>
   </div>
@@ -11,7 +11,10 @@
 export default {
   name: "Card",
   props: {
-    worker: Object
+    worker: Object,
+    name: String,
+    image_url: String,
+    position: String,
   },
   methods: {
     isShowValue(key) {
@@ -30,8 +33,8 @@ export default {
 
 <style scoped>
 .card {
-  height: 120px;
-  width: 160px;
+  height: 150px;
+  width: 170px;
   background-color: bisque;
   border: 1px solid black;
   border-radius: 5px;
@@ -46,6 +49,6 @@ export default {
   border-radius: 50%;
 }
 .title {
-  font-size: small;
+  font-size: 9px;
 }
 </style>
